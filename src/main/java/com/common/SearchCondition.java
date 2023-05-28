@@ -39,6 +39,12 @@
                     ", value='" + value + '\'' +
                     '}';
         }
+
+        public void setSearchOption(String searchOption) {
+        }
+
+        public void setSearchValue(String searchValue) {
+        }
     }
 
 

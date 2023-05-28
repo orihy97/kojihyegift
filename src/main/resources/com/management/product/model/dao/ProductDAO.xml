@@ -4,12 +4,18 @@
 <!-- * 주석을 지우고 각각 알맞은 태그를 활용하여 내용을 작성하세요. -->
 
 <!-- 1. namesapce 설정을 알맞게 지정하세요. -->
-<mapper namespace="">
+<mapper namespace="com.management.product.model.dao.ProductDAO">
 
     <!-- 2. ProductDTO type의 resultMap을 설정하세요. -->
+    <resultMap id="productResultMap" type="com.management.product.model.dto.ProductDTO">
+        <!-- ProductDTO의 각 필드에 대한 매핑 설정 -->
+    </resultMap>
 
     <!-- 3. 전체 목록을 조회하는 쿼리를 작성하세요.
             (쿼리id) selectAllProductList -->
+    <select id="selectAllProductList" resultMap="productResultMap">
+        <!-- 쿼리 내용 작성 -->
+    </select>
 
     <!-- 4. 조건에 따른 목록을 조회하는 쿼리를 작성하세요.
             (쿼리id) selectProductByCondition
@@ -18,14 +24,27 @@
             (참고 2) 판매점 유형별 조회의 경우,
                      '백화점'이면 할인율이 0%인 제품, '아울렛'이면 할인율이 1% 이상인 제품을 조회합니다.
             (참고 3) 이달의 신상품 조희의 경우, 출시일이 이번 달인 제품(예를 들어, 현재 기준이면 2023년 5월 출시 제품)울 조회합니다. -->
+    <select id="selectProductByCondition" resultMap="productResultMap" parameterType="com.common.SearchCondition">
+        <!-- 쿼리 내용 작성 -->
+    </select>
 
     <!-- 5. 제품 정보를 등록하는 쿼리를 작성하세요.
             (쿼리id) insertProduct -->
+    <insert id="insertProduct" parameterType="com.management.product.model.dto.ProductDTO">
+        <!-- 쿼리 내용 작성 -->
+    </insert>
 
     <!-- 6. 사용자가 수정을 원하는 데이터만 수정하도록 Dynamic Query를 활용한 쿼리를 작성하세요.
             (쿼리id) updateProduct -->
+    <update id="updateProduct" parameterType="com.management.product.model.dto.ProductDTO">
+        <!-- 쿼리 내용 작성 -->
+    </update>
+
 
     <!-- 7. 제품 정보를 삭제하는 쿼리를 작성하세요.
             (쿼리id) deleteProduct -->
+    <delete id="deleteProduct" parameterType="java.util.Map">
+        <!-- 쿼리 내용 작성 -->
+    </delete>
 
 </mapper>
