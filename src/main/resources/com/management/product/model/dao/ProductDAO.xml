@@ -85,21 +85,38 @@
     <update id="updateProduct" parameterType="com.management.product.model.dto.ProductDTO">
         UPDATE PRODUCT_INFO
         <set>
-            <if test="productName != null">PRODUCT_NAME = #{productName},</if>
-            <if test="originCost != null">ORIGIN_COST = #{originCost},</if>
-            <if test="releaseDate != null">RELEASE_DATE = #{releaseDate},</if>
-            <if test="discountRate != null">DISCOUNT_RATE = #{discountRate},</if>
-            <if test="salesQuantity != null">SALES_QUANTITY = #{salesQuantity},</if>
-            <if test="stockQuantity != null">STOCK_QUANTITY = #{stockQuantity},</if>
-            <if test="categoryCode != null">CATEGORY_CODE = #{categoryCode},</if>
-            <if test="productionStatus != null">PRODUCTION_STATUS = #{productionStatus},</if>
+            <if test="productName != null">
+                PRODUCT_NAME = #{productName},
+            </if>
+            <if test="originCost != null">
+                ORIGIN_COST = #{originCost},
+            </if>
+            <if test="releaseDate != null">
+                RELEASE_DATE = #{releaseDate},
+            </if>
+            <if test="discountRate != null">
+                DISCOUNT_RATE = #{discountRate},
+            </if>
+            <if test="salesQuantity != null">
+                SALES_QUANTITY = #{salesQuantity},
+            </if>
+            <if test="stockQuantity != null">
+                STOCK_QUANTITY = #{stockQuantity},
+            </if>
+            <if test="categoryCode != null">
+                CATEGORY_CODE = #{categoryCode},
+            </if>
+            <if test="productionStatus != null">
+                PRODUCTION_STATUS = #{productionStatus}
+            </if>
         </set>
         WHERE PRODUCT_CODE = #{productCode}
     </update>
 
 
+
     <!-- 7. 제품 정보를 삭제하는 쿼리를 작성하세요. -->
-    <delete id="deleteProduct" parameterType="java.util.Map">
+    <delete id="deleteProduct" parameterType="java.lang.String">
         DELETE FROM PRODUCT_INFO
         WHERE PRODUCT_CODE = #{productCode}
     </delete>
