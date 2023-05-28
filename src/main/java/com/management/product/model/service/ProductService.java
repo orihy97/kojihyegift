@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class ProductService {
 
-    private final ProductDAO productDAO;
+    private ProductDAO productDAO;
 
     public ProductService() {
         this.productDAO = productDAO;

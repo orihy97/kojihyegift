@@ -8,13 +8,33 @@
 
     <!-- 2. ProductDTO type의 resultMap을 설정하세요. -->
     <resultMap id="productResultMap" type="com.management.product.model.dto.ProductDTO">
-        <!-- ProductDTO의 각 필드에 대한 매핑 설정 -->
+        <id property="productCode" column="PRODUCT_CODE"/>
+        <result property="productName" column="PRODUCT_NAME"/>
+        <result property="originCost" column="ORIGIN_COST"/>
+        <result property="releaseDate" column="RELEASE_DATE"/>
+        <result property="discountRate" column="DISCOUNT_RATE"/>
+        <result property="salesQuantity" column="SALES_QUANTITY"/>
+        <result property="stockQuantity" column="STOCK_QUANTITY"/>
+        <result property="categoryCode" column="CATEGORY_CODE"/>
+        <result property="productionStatus" column="PRODUCTION_STATUS"/>
     </resultMap>
+
 
     <!-- 3. 전체 목록을 조회하는 쿼리를 작성하세요.
             (쿼리id) selectAllProductList -->
     <select id="selectAllProductList" resultMap="productResultMap">
-        <!-- 쿼리 내용 작성 -->
+        SELECT
+            PRODUCT_CODE,
+            PRODUCT_NAME,
+            ORIGIN_COST,
+            RELEASE_DATE,
+            DISCOUNT_RATE,
+            SALES_QUANTITY,
+            STOCK_QUANTITY,
+            CATEGORY_CODE,
+            PRODUCTION_STATUS
+        FROM
+            PRODUCT_INFO
     </select>
 
     <!-- 4. 조건에 따른 목록을 조회하는 쿼리를 작성하세요.
@@ -25,26 +45,62 @@
                      '백화점'이면 할인율이 0%인 제품, '아울렛'이면 할인율이 1% 이상인 제품을 조회합니다.
             (참고 3) 이달의 신상품 조희의 경우, 출시일이 이번 달인 제품(예를 들어, 현재 기준이면 2023년 5월 출시 제품)울 조회합니다. -->
     <select id="selectProductByCondition" resultMap="productResultMap" parameterType="com.common.SearchCondition">
-        <!-- 쿼리 내용 작성 -->
+        SELECT
+        PRODUCT_CODE,
+        PRODUCT_NAME,
+        ORIGIN_COST,
+        RELEASE_DATE,
+        DISCOUNT_RATE,
+        SALES_QUANTITY,
+        STOCK_QUANTITY,
+        CATEGORY_CODE,
+        PRODUCTION_STATUS
+        FROM
+        PRODUCT_INFO
+        WHERE
+        1 = 1
+        <if test="productName != null">
+            AND PRODUCT_NAME LIKE CONCAT('%', #{productName}, '%')
+        </if>
+        <if test="shopType != null and shopType == '백화점'">
+            AND DISCOUNT_RATE = '0'
+        </if>
+        <if test="shopType != null and shopType == '아울렛'">
+            AND DISCOUNT_RATE &gt;= '1'
+        </if>
+        <if test="newArrival">
+            AND RELEASE_DATE &gt;= DATE_FORMAT(NOW(), '%Y%m01')
+        </if>
     </select>
 
-    <!-- 5. 제품 정보를 등록하는 쿼리를 작성하세요.
-            (쿼리id) insertProduct -->
+
+    <!-- 5. 제품 정보를 등록하는 쿼리를 작성하세요. -->
     <insert id="insertProduct" parameterType="com.management.product.model.dto.ProductDTO">
-        <!-- 쿼리 내용 작성 -->
+        INSERT INTO PRODUCT_INFO (PRODUCT_NAME, ORIGIN_COST, RELEASE_DATE, DISCOUNT_RATE, SALES_QUANTITY, STOCK_QUANTITY, CATEGORY_CODE, PRODUCTION_STATUS)
+        VALUES (#{productName}, #{originCost}, #{releaseDate}, #{discountRate}, #{salesQuantity}, #{stockQuantity}, #{categoryCode}, #{productionStatus})
     </insert>
 
-    <!-- 6. 사용자가 수정을 원하는 데이터만 수정하도록 Dynamic Query를 활용한 쿼리를 작성하세요.
-            (쿼리id) updateProduct -->
+
+    <!-- 6. 사용자가 수정을 원하는 데이터만 수정하도록 Dynamic Query를 활용한 쿼리를 작성하세요. -->
     <update id="updateProduct" parameterType="com.management.product.model.dto.ProductDTO">
-        <!-- 쿼리 내용 작성 -->
+        UPDATE PRODUCT_INFO
+        <set>
+            <if test="productName != null">PRODUCT_NAME = #{productName},</if>
+            <if test="originCost != null">ORIGIN_COST = #{originCost},</if>
+            <if test="releaseDate != null">RELEASE_DATE = #{releaseDate},</if>
+            <if test="discountRate != null">DISCOUNT_RATE = #{discountRate},</if>
+            <if test="salesQuantity != null">SALES_QUANTITY = #{salesQuantity},</if>
+            <if test="stockQuantity != null">STOCK_QUANTITY = #{stockQuantity},</if>
+            <if test="categoryCode != null">CATEGORY_CODE = #{categoryCode},</if>
+            <if test="productionStatus != null">PRODUCTION_STATUS = #{productionStatus},</if>
+        </set>
+        WHERE PRODUCT_CODE = #{productCode}
     </update>
 
 
-    <!-- 7. 제품 정보를 삭제하는 쿼리를 작성하세요.
-            (쿼리id) deleteProduct -->
+    <!-- 7. 제품 정보를 삭제하는 쿼리를 작성하세요. -->
     <delete id="deleteProduct" parameterType="java.util.Map">
-        <!-- 쿼리 내용 작성 -->
+        DELETE FROM PRODUCT_INFO
+        WHERE PRODUCT_CODE = #{productCode}
     </delete>
-
 </mapper>
