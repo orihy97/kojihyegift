@@ -3,35 +3,85 @@ package com.management.product.model.service;
 import com.management.product.model.dao.ProductDAO;
 import com.management.product.model.dto.ProductDTO;
 import com.common.SearchCondition;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 import java.util.Map;
+
+import static com.common.Template.getSqlSession;
 
 public class ProductService {
 
     private ProductDAO productDAO;
 
-    public ProductService() {
-        this.productDAO = productDAO;
-    }
-
     public List<ProductDTO> selectAllProductList() {
-        return productDAO.selectAllProductList();
+        SqlSession sqlSession = getSqlSession();
+
+        productDAO = sqlSession.getMapper(ProductDAO.class);
+        List<ProductDTO> productList = productDAO.selectAllProductList();
+        sqlSession.close();
+
+        return productList;
     }
 
     public List<ProductDTO> selectProductByCondition(SearchCondition searchCondition) {
-        return productDAO.selectProductByCondition(searchCondition);
+        SqlSession sqlSession = getSqlSession();
+
+        productDAO = sqlSession.getMapper(ProductDAO.class);
+        List<ProductDTO> productList = productDAO.selectProductByCondition(searchCondition);
+        sqlSession.close();
+
+        return productList;
     }
 
     public boolean registNewProduct(ProductDTO product) {
-        return productDAO.insertProduct(product);
+        SqlSession sqlSession = getSqlSession();
+
+        productDAO = sqlSession.getMapper(ProductDAO.class);
+        boolean result = productDAO.insertProduct(product);
+
+        if (result) {
+            sqlSession.commit();
+        } else {
+            sqlSession.rollback();
+        }
+
+        sqlSession.close();
+
+        return result;
     }
 
     public boolean modifyProductInfo(ProductDTO product) {
-        return productDAO.updateProductInfo(product);
+        SqlSession sqlSession = getSqlSession();
+
+        productDAO = sqlSession.getMapper(ProductDAO.class);
+        boolean result = productDAO.updateProductInfo(product);
+
+        if (result) {
+            sqlSession.commit();
+        } else {
+            sqlSession.rollback();
+        }
+
+        sqlSession.close();
+
+        return result;
     }
 
     public boolean deleteProduct(Map<String, String> parameter) {
-        return productDAO.deleteProduct(parameter.toString());
+        SqlSession sqlSession = getSqlSession();
+
+        productDAO = sqlSession.getMapper(ProductDAO.class);
+        boolean result = productDAO.deleteProduct(parameter.toString());
+
+        if (result) {
+            sqlSession.commit();
+        } else {
+            sqlSession.rollback();
+        }
+
+        sqlSession.close();
+
+        return result;
     }
 }
