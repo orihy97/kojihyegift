@@ -26,6 +26,8 @@ public class CategoryPrint {
         } else if ("orderList".equals(option)) {
             System.out.println("주력 제품분류 순위 조회");
         }
+        System.out.println(option);
+        System.out.println(categoryList.size());
 
         // 카테고리 정보 출력
         for (CategoryDTO category : categoryList) {
