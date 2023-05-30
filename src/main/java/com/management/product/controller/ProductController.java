@@ -48,9 +48,8 @@ public class ProductController {
         if (!productList.isEmpty()) {
             productPrint.printProductList(productList, searchCondition);
         } else {
-            productPrint.printErrorMessage("조회 결과가 없습니다.");
+            productPrint.printErrorMessage("ERROR_PRODUCT_NOT_FOUND");
         }
-
     }
 
     public void registNewProduct(ProductDTO product) {
@@ -63,15 +62,15 @@ public class ProductController {
         //    (조건 3) insert가 정상적으로 수행된 경우, Print 객체를 통해 등록 성공했다는 성공 메세지를 출력하세요.
         //    (조건 4) insert가 정상적으로 수행되지 않은 경우, Print 객체를 통해 등록 실패했다는 오류 메세지를 출력하세요.
         product.setReleaseDate(product.getReleaseDate().replace("-", "")); // releaseDate 형식 변환
-        product.setProductionStatus("생산중"); // 생산여부 초기값 설정
+        product.setProductionStatus("Y"); // 생산여부 초기값 설정
         product.setSalesQuantity(String.valueOf(0)); // 판매량 초기값 설정
 
         boolean result = productService.registNewProduct(product);
 
         if (result) {
-            productPrint.printSuccessMessage("등록 성공");
+            productPrint.printSuccessMessage("SUCCESS_REGISTRATION");
         } else {
-            productPrint.printErrorMessage("등록 실패");
+            productPrint.printErrorMessage("ERROR_REGISTRATION_FAILED");
         }
 
     }
@@ -89,9 +88,9 @@ public class ProductController {
         boolean result = productService.modifyProductInfo(product);
 
         if (result) {
-            productPrint.printSuccessMessage("수정 성공");
+            productPrint.printSuccessMessage("SUCCESS_MODIFICATION");
         } else {
-            productPrint.printErrorMessage("수정 실패");
+            productPrint.printErrorMessage("ERROR_MODIFICATION_FAILED");
         }
 
     }
@@ -105,9 +104,9 @@ public class ProductController {
         boolean result = productService.deleteProduct(parameter);
 
         if (result) {
-            productPrint.printSuccessMessage("삭제 성공");
+            productPrint.printSuccessMessage("SUCCESS_DELETION");
         } else {
-            productPrint.printErrorMessage("삭제 실패");
+            productPrint.printErrorMessage("ERROR_DELETION_FAILED");
         }
     }
 }

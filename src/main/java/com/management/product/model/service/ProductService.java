@@ -3,6 +3,7 @@ package com.management.product.model.service;
 import com.management.product.model.dao.ProductDAO;
 import com.management.product.model.dto.ProductDTO;
 import com.common.SearchCondition;
+import com.management.product.view.ProductPrint;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import static com.common.Template.getSqlSession;
 public class ProductService {
 
     private ProductDAO productDAO;
+    private ProductPrint productPrint;
 
     public List<ProductDTO> selectAllProductList() {
         SqlSession sqlSession = getSqlSession();
@@ -72,7 +74,7 @@ public class ProductService {
         SqlSession sqlSession = getSqlSession();
 
         productDAO = sqlSession.getMapper(ProductDAO.class);
-        boolean result = productDAO.deleteProduct(parameter.toString());
+        boolean result = productDAO.deleteProduct(parameter.get("productCode"));
 
         if (result) {
             sqlSession.commit();
@@ -84,4 +86,5 @@ public class ProductService {
 
         return result;
     }
+
 }
