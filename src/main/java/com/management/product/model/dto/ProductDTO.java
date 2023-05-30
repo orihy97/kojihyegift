@@ -2,21 +2,21 @@ package com.management.product.model.dto;
 
 public class ProductDTO {
 
-    private String productCode;        // 제품코드
-    private String productName;       // 제품명
-    private String originCost;        // 원가
-    private String releaseDate;       // 출시일
-    private String discountRate;      // 할인율
-    private String salesQuantity;     // 판매량
-    private String stockQuantity;     // 재고량
-    private String categoryCode;      // 제품분류코드
-    private String productionStatus;  // 생산상태
+    private String productCode;
+    private String productName;
+    private String originCost;
+    private String releaseDate;
+    private String discountRate;
+    private String salesQuantity;
+    private String stockQuantity;
+    private String categoryCode;
+    private String productionStatus;
 
-    // 생성자
+
     public ProductDTO() {
     }
 
-    // Getter/Setter 메소드
+
     public String getProductCode() {
         return productCode;
     }

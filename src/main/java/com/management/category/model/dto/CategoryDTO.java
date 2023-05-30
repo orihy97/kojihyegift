@@ -5,7 +5,6 @@ public class CategoryDTO {
     private String categoryName;
 
     public CategoryDTO() {
-        // 기본 생성자
     }
 
     public CategoryDTO(String categoryCode, String categoryName) {
